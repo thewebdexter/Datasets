@@ -1,0 +1,901 @@
+{
+  "name": "SentraLink DNR Rules",
+  "version": "1.0.0",
+  "generated": "2025-09-16",
+  "normal_rules": [
+    {
+      "id": 50000,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "fb_ref",
+                "igshid",
+                "ref",
+                "ref_src",
+                "ref_url",
+                "referrer",
+                "utm_campaign",
+                "utm_content",
+                "utm_creative_format",
+                "utm_id",
+                "utm_marketing_tactic",
+                "utm_medium",
+                "utm_source",
+                "utm_source_platform",
+                "utm_term"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50001,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "spm",
+                "spm_a",
+                "spm_b",
+                "spm_c",
+                "spm_d",
+                "spm_id"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?\\*\\.alibaba\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50002,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "spm",
+                "spm_a",
+                "spm_b",
+                "spm_c",
+                "spm_d",
+                "spm_id"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?aliexpress\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50003,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "pf_rd_c",
+                "pf_rd_i",
+                "pf_rd_m",
+                "pf_rd_p",
+                "pf_rd_r",
+                "pf_rd_s",
+                "pf_rd_t",
+                "psc",
+                "qid",
+                "ref",
+                "s",
+                "smid",
+                "sr"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?amazon\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50004,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "blt",
+                "promo"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?bol\\.com/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50005,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "_trkparms",
+                "crlp",
+                "epid",
+                "keyword",
+                "mkevt",
+                "mkgroupid",
+                "mksegid",
+                "siteid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?ebay\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50006,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "ref"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?etsy\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50007,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "fm",
+                "lid",
+                "marketplace",
+                "otracker",
+                "ppn",
+                "ppt",
+                "q",
+                "qH",
+                "srno",
+                "ssid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?flipkart\\.com/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50008,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "pvid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?jd\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50009,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "matt_campaign",
+                "matt_source",
+                "matt_tool",
+                "matt_word"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?mercadolibre\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50010,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "k",
+                "o"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?noon\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50011,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "smtt",
+                "sp_atk",
+                "xptdk"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?shopee\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50012,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "spm",
+                "spm_a",
+                "spm_b",
+                "spm_c",
+                "spm_d",
+                "spm_id"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?taobao\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50013,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "cmpid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?walmart\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 50014,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "wm_mc"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?zalando\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    }
+  ],
+  "strict_rules": [
+    {
+      "id": 60000,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "fb_ref",
+                "fbclid",
+                "gclid",
+                "igshid",
+                "msclkid",
+                "ref",
+                "ref_src",
+                "ref_url",
+                "referrer",
+                "ttclid",
+                "utm_campaign",
+                "utm_content",
+                "utm_creative_format",
+                "utm_id",
+                "utm_marketing_tactic",
+                "utm_medium",
+                "utm_source",
+                "utm_source_platform",
+                "utm_term"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60001,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "ali_trackid",
+                "spm",
+                "spm_a",
+                "spm_b",
+                "spm_c",
+                "spm_d",
+                "spm_id"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?\\*\\.alibaba\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60002,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "aff_fcid",
+                "aff_fsk",
+                "aff_platform",
+                "aff_trace_key",
+                "spm",
+                "spm_a",
+                "spm_b",
+                "spm_c",
+                "spm_d",
+                "spm_id"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?aliexpress\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60003,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "ascsubtag",
+                "pf_rd_c",
+                "pf_rd_i",
+                "pf_rd_m",
+                "pf_rd_p",
+                "pf_rd_r",
+                "pf_rd_s",
+                "pf_rd_t",
+                "psc",
+                "qid",
+                "ref",
+                "s",
+                "smid",
+                "sr",
+                "tag"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?amazon\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60004,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "irclickid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?bestbuy\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60005,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "blt",
+                "promo"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?bol\\.com/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60006,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "_trkparms",
+                "campid",
+                "crlp",
+                "customid",
+                "epid",
+                "keyword",
+                "mkcid",
+                "mkevt",
+                "mkgroupid",
+                "mkrid",
+                "mksegid",
+                "sid",
+                "siteid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?ebay\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60007,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "click_key",
+                "click_sum",
+                "ref"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?etsy\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60008,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "affid",
+                "fm",
+                "lid",
+                "marketplace",
+                "otracker",
+                "ppn",
+                "ppt",
+                "q",
+                "qH",
+                "srno",
+                "ssid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?flipkart\\.com/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60009,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "pvid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?jd\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60010,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "matt_campaign",
+                "matt_source",
+                "matt_tool",
+                "matt_word"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?mercadolibre\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60011,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "k",
+                "o"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?noon\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60012,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "smtt",
+                "sp_atk",
+                "xptdk"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?shopee\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60013,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "ali_trackid",
+                "spm",
+                "spm_a",
+                "spm_b",
+                "spm_c",
+                "spm_d",
+                "spm_id"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?taobao\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60014,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "irgwc"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?target\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60015,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "affilsrc",
+                "affp1",
+                "cmpid",
+                "irgwc",
+                "u1"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?walmart\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 60016,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "wm_mc"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?zalando\\.[^/]+/",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    }
+  ],
+  "notes": {
+    "skipped_count": 1,
+    "skipped_reason": "Path transforms not supported by Declarative Net Request; handle via optional webRequest fallback if needed."
+  }
+}
