@@ -1,0 +1,56 @@
+name: Sync rules to Cloudflare R2
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "Data/sentralink_dnr_rules.v1.json"
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    env:
+      R2_ACCOUNT_ID: ${{ secrets.CF_R2_ACCOUNT_ID }}
+      R2_BUCKET:     ${{ secrets.CF_R2_BUCKET }}
+      AWS_ACCESS_KEY_ID:     ${{ secrets.CF_R2_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.CF_R2_SECRET_ACCESS_KEY }}
+      SRC_FILE: "Data/sentralink_dnr_rules.v1.json"
+      DEST_LATEST: "rules/latest.json"
+      CACHE_CONTROL: "public, max-age=3600, stale-while-revalidate=86400"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compute version tag (UTC)
+        id: ts
+        run: echo "stamp=$(date -u +'%Y%m%d-%H%M%S')" >> "$GITHUB_OUTPUT"
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y awscli
+
+      - name: Upload latest.json to R2
+        run: >
+          aws s3 cp "$SRC_FILE"
+          "s3://$R2_BUCKET/$DEST_LATEST"
+          --endpoint-url "https://$R2_ACCOUNT_ID.r2.cloudflarestorage.com"
+          --content-type "application/json"
+          --cache-control "$CACHE_CONTROL"
+
+      - name: Upload versioned snapshot to R2
+        env:
+          STAMP: ${{ steps.ts.outputs.stamp }}
+        run: >
+          aws s3 cp "$SRC_FILE"
+          "s3://$R2_BUCKET/rules/v1-${STAMP}.json"
+          --endpoint-url "https://$R2_ACCOUNT_ID.r2.cloudflarestorage.com"
+          --content-type "application/json"
+          --cache-control "$CACHE_CONTROL"
+
+      - name: Show public URLs (for logs)
+        env:
+          STAMP: ${{ steps.ts.outputs.stamp }}
+        run: |
+          echo "Latest:   https://sentralink-14ee0dedde0a469c80014ddb7ff94ff3.thewebdexter.com/rules/latest.json"
+          echo "Snapshot: https://sentralink-14ee0dedde0a469c80014ddb7ff94ff3.thewebdexter.com/rules/v1-${STAMP}.json"
