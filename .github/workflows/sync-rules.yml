@@ -10,31 +10,44 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     env:
+      # R2 / S3 details
       R2_ACCOUNT_ID: ${{ secrets.CF_R2_ACCOUNT_ID }}
       R2_BUCKET:     ${{ secrets.CF_R2_BUCKET }}
+      # Map CF R2 keys to AWS CLI env vars
       AWS_ACCESS_KEY_ID:     ${{ secrets.CF_R2_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.CF_R2_SECRET_ACCESS_KEY }}
+      # CLI settings
+      AWS_EC2_METADATA_DISABLED: "true"   # avoid metadata timeouts
       SRC_FILE: "Data/sentralink_dnr_rules.v1.json"
       DEST_LATEST: "rules/latest.json"
       CACHE_CONTROL: "public, max-age=3600, stale-while-revalidate=86400"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Install AWS CLI v2
+        uses: aws-actions/setup-aws-cli@v2
+        with:
+          version: "2"
 
       - name: Compute version tag (UTC)
         id: ts
         run: echo "stamp=$(date -u +'%Y%m%d-%H%M%S')" >> "$GITHUB_OUTPUT"
 
-      - name: Install AWS CLI
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y awscli
+      - name: Debug: show AWS CLI version
+        run: aws --version
+
+      - name: Debug: list bucket (should succeed or be empty)
+        run: >
+          aws s3 ls "s3://$R2_BUCKET"
+          --endpoint-url "https://${{ env.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com"
 
       - name: Upload latest.json to R2
         run: >
           aws s3 cp "$SRC_FILE"
           "s3://$R2_BUCKET/$DEST_LATEST"
-          --endpoint-url "https://$R2_ACCOUNT_ID.r2.cloudflarestorage.com"
+          --endpoint-url "https://${{ env.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com"
           --content-type "application/json"
           --cache-control "$CACHE_CONTROL"
 
@@ -44,7 +57,7 @@ jobs:
         run: >
           aws s3 cp "$SRC_FILE"
           "s3://$R2_BUCKET/rules/v1-${STAMP}.json"
-          --endpoint-url "https://$R2_ACCOUNT_ID.r2.cloudflarestorage.com"
+          --endpoint-url "https://${{ env.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com"
           --content-type "application/json"
           --cache-control "$CACHE_CONTROL"
 
