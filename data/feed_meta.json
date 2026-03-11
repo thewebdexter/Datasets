@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-03-11T00:23:00.029893+00:00",
-  "total_entries": 1250613,
-  "unique_domains": 342859,
+  "generated_at": "2026-03-11T00:42:56.941290+00:00",
+  "total_entries": 1250607,
+  "unique_domains": 342858,
   "feed_stats": {
-    "feed_phishtank": 56265,
+    "feed_phishtank": 56258,
     "feed_openphish": 300,
     "feed_urlhaus": 0,
     "feed_malware_domain_list": 164245,
@@ -15,7 +15,7 @@
   "categories": {
     "known_good": 983398,
     "malware": 164241,
-    "phishing": 56113,
+    "phishing": 56107,
     "tracker": 43553,
     "advertising": 1792,
     "analytics": 382,
@@ -32,7 +32,7 @@
   "sources": {
     "cisco_umbrella": 983398,
     "steven_black_hosts": 164241,
-    "phishtank": 55838,
+    "phishtank": 55832,
     "easyprivacy": 43553,
     "disconnect_me": 3308,
     "openphish": 275
