@@ -33,7 +33,7 @@ async function generateFilter() {
     // 7. Save the filter buckets to a local file
     // We convert the Int32Array buckets to a standard array for JSON serialization
     const filterData = [].slice.call(filter.buckets);
-    fs.writeFileSync('hsts-bloom-filter.json', JSON.stringify(filterData));
+    fs.writeFileSync('data/hsts-bloom-filter.json', JSON.stringify(filterData));
     
     console.log('Successfully generated hsts-bloom-filter.json');
     
