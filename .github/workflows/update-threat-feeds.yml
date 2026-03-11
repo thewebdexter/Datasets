@@ -17,12 +17,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Validate dnr_rules.json
+      - name: Validate dnr_rules_manual.json
         run: |
-          echo "Validating data/dnr_rules.json …"
+          echo "Validating data/dnr_rules_manual.json …"
           python3 -c "
           import json, sys
-          with open('data/dnr_rules.json') as f:
+          with open('data/dnr_rules_manual.json') as f:
               data = json.load(f)
           normal  = data.get('normal_rules', [])
           strict  = data.get('strict_rules', [])
@@ -31,7 +31,7 @@ jobs:
           if dupes:
               print(f'ERROR: Duplicate rule IDs: {set(dupes)}', file=sys.stderr)
               sys.exit(1)
-          print(f'OK — {len(normal)} normal rules, {len(strict)} strict rules, no duplicate IDs')
+          print(f'OK — {len(normal)} normal rules, {len(strict)} strict rules')
           "
 
       - name: Set up Python
@@ -44,7 +44,10 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Download & merge feeds
+      - name: Build DNR rules (ClearURLs + manual)
+        run: python scripts/build_dnr_rules.py
+
+      - name: Download & merge threat feeds
         env:
           PHISHTANK_API_KEY: ${{ secrets.PHISHTANK_API_KEY }}
         run: python scripts/build_feed.py
@@ -53,7 +56,11 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Only commit compact files. master_feed.json exceeds GitHub's 100 MB limit.
-          git add data/domain_map.json data/phishing_urls.json data/malware_urls.json data/feed_meta.json
-          git diff --cached --quiet || git commit -m "chore: update threat feeds [$(date -u +'%Y-%m-%d %H:%M UTC')]"
+          git add data/domain_map.json \
+                  data/phishing_urls.json \
+                  data/malware_urls.json \
+                  data/feed_meta.json \
+                  data/dnr_rules.json \
+                  data/.clearurls_hash
+          git diff --cached --quiet || git commit -m "chore: update feeds + DNR rules [$(date -u +'%Y-%m-%d %H:%M UTC')]"
           git push
