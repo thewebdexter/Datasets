@@ -54,6 +54,6 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # Only commit compact files. master_feed.json exceeds GitHub's 100 MB limit.
-          git add data/domain_map.json data/feed_meta.json
+          git add data/domain_map.json data/phishing_urls.json data/malware_urls.json data/feed_meta.json
           git diff --cached --quiet || git commit -m "chore: update threat feeds [$(date -u +'%Y-%m-%d %H:%M UTC')]"
           git push
