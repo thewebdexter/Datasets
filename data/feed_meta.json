@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-03-11T00:03:15.607627+00:00",
+  "total_entries": 500000,
+  "unique_domains": 123169,
+  "feed_stats": {
+    "feed_phishtank": 56265,
+    "feed_openphish": 300,
+    "feed_urlhaus": 0,
+    "feed_malware_domain_list": 0,
+    "feed_disconnect_me": 0,
+    "feed_easylist_privacy": 46755,
+    "feed_spamhaus_dbl": 0,
+    "feed_cisco_umbrella_top1m": 1000000
+  },
+  "categories": {
+    "known_good": 397177,
+    "phishing": 56121,
+    "tracker": 46702
+  },
+  "sources": {
+    "cisco_umbrella": 397177,
+    "phishtank": 55838,
+    "easyprivacy": 46702,
+    "openphish": 283
+  }
+}
