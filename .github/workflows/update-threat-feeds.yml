@@ -59,6 +59,8 @@ jobs:
           git add data/domain_map.json \
                   data/phishing_urls.json \
                   data/malware_urls.json \
+                  data/phishing_bloom.bin \
+                  data/malware_bloom.bin \
                   data/feed_meta.json \
                   data/dnr_rules.json \
                   data/.clearurls_hash
