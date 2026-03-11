@@ -1,0 +1,59 @@
+name: Update Threat Intelligence Feeds
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # Every 6 hours
+  workflow_dispatch:          # Allow manual runs
+
+permissions:
+  contents: write
+
+jobs:
+  update-feeds:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate dnr_rules.json
+        run: |
+          echo "Validating data/dnr_rules.json …"
+          python3 -c "
+          import json, sys
+          with open('data/dnr_rules.json') as f:
+              data = json.load(f)
+          normal  = data.get('normal_rules', [])
+          strict  = data.get('strict_rules', [])
+          ids = [r['id'] for r in normal + strict]
+          dupes = [i for i in ids if ids.count(i) > 1]
+          if dupes:
+              print(f'ERROR: Duplicate rule IDs: {set(dupes)}', file=sys.stderr)
+              sys.exit(1)
+          print(f'OK — {len(normal)} normal rules, {len(strict)} strict rules, no duplicate IDs')
+          "
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download & merge feeds
+        env:
+          PHISHTANK_API_KEY: ${{ secrets.PHISHTANK_API_KEY }}
+        run: python scripts/build_feed.py
+
+      - name: Commit & push dataset
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Only commit compact files. master_feed.json exceeds GitHub's 100 MB limit.
+          git add data/domain_map.json data/feed_meta.json
+          git diff --cached --quiet || git commit -m "chore: update threat feeds [$(date -u +'%Y-%m-%d %H:%M UTC')]"
+          git push
