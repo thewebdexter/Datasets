@@ -1,10 +1,25 @@
 {
-  "name": "SentraLink DNR Rules",
-  "version": "1.0.0",
-  "generated": "2025-09-16",
+  "name": "SentraLink DNR Rules — Manual",
+  "version": "1.1.0",
+  "generated": "2026-03-11",
+  "notes": {
+    "scope": "Manual rules only. Auto-generated rules from ClearURLs are merged separately at build time. All params here are NOT covered by ClearURLs globalRules or provider-specific rules as of 2026-03-11.",
+    "priority_model": "Global rules = priority 1. Domain-specific = priority 2. Path-specific = priority 3. Higher number wins in DNR.",
+    "id_ranges": {
+      "50000-50999": "Normal mode — domain-specific (manual)",
+      "60000-60999": "Strict mode — domain-specific (manual, includes affiliate params)",
+      "51000-51999": "Normal mode — global catch-all supplements",
+      "61000-61999": "Strict mode — global catch-all supplements"
+    },
+    "skipped_count": 1,
+    "skipped_reason": "Path transforms (e.g. /ref= path segment removal) not supported by Declarative Net Request; handle via optional webRequest fallback."
+  },
+
   "normal_rules": [
+
     {
-      "id": 50000,
+      "_comment": "=== GLOBAL SUPPLEMENTS — params missed by ClearURLs globalRules ===",
+      "id": 51000,
       "priority": 1,
       "action": {
         "type": "redirect",
@@ -12,21 +27,90 @@
           "transform": {
             "queryTransform": {
               "removeParams": [
-                "fb_ref",
-                "igshid",
-                "ref",
-                "ref_src",
-                "ref_url",
-                "referrer",
-                "utm_campaign",
-                "utm_content",
-                "utm_creative_format",
-                "utm_id",
-                "utm_marketing_tactic",
-                "utm_medium",
-                "utm_source",
-                "utm_source_platform",
-                "utm_term"
+                "at_campaign",
+                "at_custom1",
+                "at_custom2",
+                "at_custom3",
+                "at_custom4",
+                "at_medium",
+                "at_source",
+                "campaign_id",
+                "campaign_source",
+                "campaign_medium",
+                "campaign_name",
+                "campaign_content",
+                "campaign_term",
+                "cnx_clk",
+                "cnx_medium",
+                "cnx_source",
+                "cwsid",
+                "dd_source",
+                "ef_id",
+                "icid",
+                "irclickid",
+                "irgwc",
+                "j",
+                "jid",
+                "kenshoo_ida",
+                "kwid",
+                "mc_cid",
+                "mc_eid",
+                "mkwid",
+                "muid",
+                "nb_klid",
+                "ns_campaign",
+                "ns_fee",
+                "ns_linkname",
+                "ns_mchannel",
+                "ns_source",
+                "oly_anon_id",
+                "oly_enc_id",
+                "om_campaign",
+                "om_source",
+                "om_medium",
+                "om_content",
+                "om_clid",
+                "omnisendContactID",
+                "orig_msclkid",
+                "partner_id",
+                "pcrid",
+                "piwik_campaign",
+                "piwik_keyword",
+                "piwik_source",
+                "pk_campaign",
+                "pk_cpn",
+                "pk_keyword",
+                "pk_kwd",
+                "pk_medium",
+                "pk_source",
+                "rb_clickid",
+                "rdct",
+                "s_cid",
+                "s_kwcid",
+                "sc_campaign",
+                "sc_channel",
+                "sc_content",
+                "sc_medium",
+                "sc_outcome",
+                "sc_term",
+                "soc_src",
+                "soc_trk",
+                "spref",
+                "trk_contact",
+                "trk_module",
+                "trk_msg",
+                "trk_sid",
+                "ttclid",
+                "vero_conv",
+                "vero_id",
+                "wbraid",
+                "wickedid",
+                "xtor",
+                "xtmc",
+                "yclid",
+                "zanpid",
+                "zm_medium",
+                "zm_source"
               ]
             }
           }
@@ -37,53 +121,27 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
-      "id": 50001,
-      "priority": 1,
-      "action": {
-        "type": "redirect",
-        "redirect": {
-          "transform": {
-            "queryTransform": {
-              "removeParams": ["spm","spm_a","spm_b","spm_c","spm_d","spm_id"]
-            }
-          }
-        }
-      },
-      "condition": {
-        "regexFilter": "^https?://([^/]*\\.)?alibaba\\.[^/]+/",
-        "resourceTypes": ["main_frame", "sub_frame"]
-      }
-    },
-    {
-      "id": 50002,
-      "priority": 1,
-      "action": {
-        "type": "redirect",
-        "redirect": {
-          "transform": {
-            "queryTransform": {
-              "removeParams": ["spm","spm_a","spm_b","spm_c","spm_d","spm_id"]
-            }
-          }
-        }
-      },
-      "condition": {
-        "regexFilter": "^https?://([^/]*\\.)?aliexpress\\.[^/]+/",
-        "resourceTypes": ["main_frame", "sub_frame"]
-      }
-    },
-    {
+      "_comment": "=== AMAZON — supplements to ClearURLs amazon rules ===",
       "id": 50003,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
               "removeParams": [
-                "pf_rd_c","pf_rd_i","pf_rd_m","pf_rd_p","pf_rd_r",
-                "pf_rd_s","pf_rd_t","psc","qid","ref","s","smid","sr"
+                "pf_rd_c",
+                "pf_rd_i",
+                "pf_rd_m",
+                "pf_rd_p",
+                "pf_rd_r",
+                "pf_rd_s",
+                "pf_rd_t",
+                "psc",
+                "smid",
+                "sr"
               ]
             }
           }
@@ -94,14 +152,84 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
-      "id": 50004,
-      "priority": 1,
+      "_comment": "=== ALIBABA ===",
+      "id": 50001,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["blt","promo"] }
+            "queryTransform": {
+              "removeParams": [
+                "spm",
+                "spm_a",
+                "spm_b",
+                "spm_c",
+                "spm_d",
+                "spm_id",
+                "tracelog",
+                "tpp_fcategory",
+                "tpp_rcategory",
+                "initiative_id"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?alibaba\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== ALIEXPRESS — supplements to ClearURLs aliexpress rules ===",
+      "id": 50002,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "spm",
+                "spm_a",
+                "spm_b",
+                "spm_c",
+                "spm_d",
+                "spm_id",
+                "initiative_id",
+                "productId",
+                "pdp_npi",
+                "pdp_ext_f",
+                "spreadType",
+                "srcSns",
+                "sourceType",
+                "bizType"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?aliexpress\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== BOL.COM ===",
+      "id": 50004,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["blt", "promo", "source"]
+            }
           }
         }
       },
@@ -110,15 +238,25 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== EBAY — supplements to ClearURLs ebay rules ===",
       "id": 50005,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
-              "removeParams": ["_trkparms","crlp","epid","keyword","mkevt","mkgroupid","mksegid","siteid"]
+              "removeParams": [
+                "crlp",
+                "epid",
+                "keyword",
+                "mkevt",
+                "mkgroupid",
+                "mksegid",
+                "siteid"
+              ]
             }
           }
         }
@@ -128,14 +266,24 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== ETSY — supplements to ClearURLs (ClearURLs does not cover etsy) ===",
       "id": 50006,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["ref"] }
+            "queryTransform": {
+              "removeParams": [
+                "ref",
+                "frs",
+                "source",
+                "search_query",
+                "organic_search_click"
+              ]
+            }
           }
         }
       },
@@ -144,15 +292,26 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== FLIPKART ===",
       "id": 50007,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
-              "removeParams": ["fm","lid","marketplace","otracker","ppn","ppt","q","qH","srno","ssid"]
+              "removeParams": [
+                "fm",
+                "lid",
+                "marketplace",
+                "otracker",
+                "ppn",
+                "ppt",
+                "srno",
+                "ssid"
+              ]
             }
           }
         }
@@ -162,14 +321,18 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== JD.COM ===",
       "id": 50008,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["pvid"] }
+            "queryTransform": {
+              "removeParams": ["pvid", "cu_param", "lbs", "enc"]
+            }
           }
         }
       },
@@ -178,15 +341,24 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== MERCADOLIBRE ===",
       "id": 50009,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
-              "removeParams": ["matt_campaign","matt_source","matt_tool","matt_word"]
+              "removeParams": [
+                "matt_campaign",
+                "matt_source",
+                "matt_tool",
+                "matt_word",
+                "matt_custom_a",
+                "matt_custom_b"
+              ]
             }
           }
         }
@@ -196,14 +368,18 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== NOON ===",
       "id": 50010,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["k","o"] }
+            "queryTransform": {
+              "removeParams": ["k", "o", "source_type", "t_source"]
+            }
           }
         }
       },
@@ -212,14 +388,31 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== SHOPEE ===",
       "id": 50011,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["smtt","sp_atk","xptdk"] }
+            "queryTransform": {
+              "removeParams": [
+                "smtt",
+                "sp_atk",
+                "xptdk",
+                "af_siteid",
+                "af_click_lookback",
+                "af_viewthrough_lookback",
+                "af_reengagement_window",
+                "pid",
+                "c",
+                "is_retargeting",
+                "af_dp",
+                "af_web_dp"
+              ]
+            }
           }
         }
       },
@@ -228,15 +421,32 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== TAOBAO ===",
       "id": 50012,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
-              "removeParams": ["spm","spm_a","spm_b","spm_c","spm_d","spm_id"]
+              "removeParams": [
+                "spm",
+                "spm_a",
+                "spm_b",
+                "spm_c",
+                "spm_d",
+                "spm_id",
+                "scm",
+                "scm_",
+                "pvid",
+                "abbucket",
+                "search_type",
+                "sourceId",
+                "initiative_id",
+                "tracelog"
+              ]
             }
           }
         }
@@ -246,14 +456,24 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== WALMART — supplements to ClearURLs walmart rules ===",
       "id": 50013,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["cmpid"] }
+            "queryTransform": {
+              "removeParams": [
+                "cmpid",
+                "irgwc",
+                "sourceid",
+                "veh",
+                "wmlspartner"
+              ]
+            }
           }
         }
       },
@@ -262,14 +482,18 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== ZALANDO ===",
       "id": 50014,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["wm_mc"] }
+            "queryTransform": {
+              "removeParams": ["wm_mc", "cross_sell", "tracking"]
+            }
           }
         }
       },
@@ -277,102 +501,365 @@
         "regexFilter": "^https?://([^/]*\\.)?zalando\\.[^/]+/",
         "resourceTypes": ["main_frame", "sub_frame"]
       }
-    }
-  ],
-  "strict_rules": [
+    },
+
     {
-      "id": 60000,
-      "priority": 1,
+      "_comment": "=== APPLE — not in ClearURLs ===",
+      "id": 50015,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
               "removeParams": [
-                "fb_ref","fbclid","gclid","igshid","msclkid",
-                "ref","ref_src","ref_url","referrer","ttclid",
-                "utm_campaign","utm_content","utm_creative_format",
-                "utm_id","utm_marketing_tactic","utm_medium",
-                "utm_source","utm_source_platform","utm_term"
+                "at",
+                "ct",
+                "ls",
+                "mt",
+                "uo",
+                "app",
+                "itsct",
+                "itscg",
+                "pt"
               ]
             }
           }
         }
       },
       "condition": {
-        "regexFilter": "^https?://",
+        "regexFilter": "^https?://([^/]*\\.)?apple\\.com/",
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
-      "id": 60001,
-      "priority": 1,
-      "action": {
-        "type": "redirect",
-        "redirect": {
-          "transform": {
-            "queryTransform": {
-              "removeParams": ["ali_trackid","spm","spm_a","spm_b","spm_c","spm_d","spm_id"]
-            }
-          }
-        }
-      },
-      "condition": {
-        "regexFilter": "^https?://([^/]*\\.)?alibaba\\.[^/]+/",
-        "resourceTypes": ["main_frame", "sub_frame"]
-      }
-    },
-    {
-      "id": 60002,
-      "priority": 1,
+      "_comment": "=== SPOTIFY — not in ClearURLs ===",
+      "id": 50016,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
               "removeParams": [
-                "aff_fcid","aff_fsk","aff_platform","aff_trace_key",
-                "spm","spm_a","spm_b","spm_c","spm_d","spm_id"
+                "si",
+                "nd",
+                "context",
+                "go",
+                "sp_cid",
+                "utm_source",
+                "utm_medium",
+                "utm_campaign",
+                "referral",
+                "referralCode"
               ]
             }
           }
         }
       },
       "condition": {
-        "regexFilter": "^https?://([^/]*\\.)?aliexpress\\.[^/]+/",
+        "regexFilter": "^https?://([^/]*\\.)?spotify\\.com/",
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
-      "id": 60003,
-      "priority": 1,
+      "_comment": "=== TIKTOK — not in ClearURLs ===",
+      "id": 50017,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
               "removeParams": [
-                "ascsubtag","pf_rd_c","pf_rd_i","pf_rd_m","pf_rd_p",
-                "pf_rd_r","pf_rd_s","pf_rd_t","psc","qid","ref",
-                "s","smid","sr","tag"
+                "_r",
+                "_d",
+                "_t",
+                "checksum",
+                "enter_from",
+                "enter_method",
+                "is_from_webapp",
+                "is_copy_url",
+                "sender_device",
+                "sender_web_id",
+                "share_app_id",
+                "share_item_id",
+                "share_link_id",
+                "source",
+                "timestamp",
+                "tt_from",
+                "unique_id",
+                "sec_uid"
               ]
             }
           }
         }
       },
       "condition": {
-        "regexFilter": "^https?://([^/]*\\.)?amazon\\.[^/]+/",
+        "regexFilter": "^https?://([^/]*\\.)?tiktok\\.com/",
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
-      "id": 60004,
-      "priority": 1,
+      "_comment": "=== INSTAGRAM — not in ClearURLs ===",
+      "id": 50018,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["irclickid"] }
+            "queryTransform": {
+              "removeParams": [
+                "igshid",
+                "ig_rid",
+                "ig_mid",
+                "igsh"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?instagram\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== SUBSTACK — not in ClearURLs ===",
+      "id": 50019,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "r",
+                "trk",
+                "utm_source",
+                "utm_medium",
+                "utm_campaign",
+                "utm_content"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?substack\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== PINTEREST — not in ClearURLs ===",
+      "id": 50020,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "amp",
+                "epik",
+                "invite_code",
+                "sender",
+                "pt",
+                "e_t",
+                "e_t_s",
+                "et",
+                "send_client_id",
+                "mweb_unauth_id",
+                "email_type"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?pinterest\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== SNAPCHAT — not in ClearURLs ===",
+      "id": 50021,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "sc_referrer",
+                "sender",
+                "share_id",
+                "sid",
+                "source"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?snapchat\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== DISCORD — not in ClearURLs ===",
+      "id": 50022,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "source"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?discord\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== WHATSAPP — not in ClearURLs ===",
+      "id": 50023,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["source", "send_client_id", "attr_source", "attr_medium", "attr_campaign"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?whatsapp\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== TELEGRAM — not in ClearURLs ===",
+      "id": 50024,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["startattach", "attach", "single", "boost"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?t\\.me/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== MICROSOFT / BING / OUTLOOK — not in ClearURLs ===",
+      "id": 50025,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "OCID",
+                "ocid",
+                "WT.mc_id",
+                "wt.mc_id",
+                "ranMID",
+                "ranEAID",
+                "ranSiteID",
+                "epi",
+                "irgwc",
+                "af_creative",
+                "af_network",
+                "WT.srch",
+                "icid",
+                "wa",
+                "wsver"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?microsoft\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== NETFLIX — supplements ClearURLs netflix (adds missing params) ===",
+      "id": 50026,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "cid",
+                "so",
+                "strm_type",
+                "t",
+                "utm_source",
+                "utm_medium",
+                "utm_campaign",
+                "utm_term",
+                "utm_content",
+                "vlang",
+                "nfcid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?netflix\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== BESTBUY — ClearURLs has no bestbuy rules ===",
+      "id": 50027,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "irclickid",
+                "irgwc",
+                "loc",
+                "acampID",
+                "mpid",
+                "intl",
+                "ref"
+              ]
+            }
           }
         }
       },
@@ -381,14 +868,1438 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
-      "id": 60005,
+      "_comment": "=== TARGET — ClearURLs has no target rules ===",
+      "id": 50028,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "irgwc",
+                "afid",
+                "clkid",
+                "lnm",
+                "ref",
+                "partnerId"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?target\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== RAKUTEN / VIBER / KOBO ===",
+      "id": 50029,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "ranMID",
+                "ranEAID",
+                "ranSiteID",
+                "siteID"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?rakuten\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== AIRBNB — not in ClearURLs ===",
+      "id": 50030,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "af_dp",
+                "af_web_dp",
+                "c",
+                "channel",
+                "irclickid",
+                "irgwc",
+                "media_type",
+                "msclkid",
+                "pid",
+                "s_cid",
+                "source"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?airbnb\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== BOOKING.COM — not in ClearURLs ===",
+      "id": 50031,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "aid",
+                "label",
+                "sid",
+                "src",
+                "sig",
+                "click_id",
+                "irgwc",
+                "irclickid",
+                "affiliate_id"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?booking\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== TRIPADVISOR — not in ClearURLs ===",
+      "id": 50032,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "m",
+                "taMCI",
+                "MCID",
+                "clickid",
+                "masterid",
+                "source"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?tripadvisor\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== EXPEDIA / HOTELS.COM / VRBO (Expedia Group) ===",
+      "id": 50033,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "affcid",
+                "afflid",
+                "mcicid",
+                "imptype",
+                "clickid",
+                "mdpcid",
+                "chkin",
+                "chkout",
+                "semcid",
+                "kword",
+                "irgwc",
+                "irclickid",
+                "mpid",
+                "clickref",
+                "ref_id"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?expedia\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== HOTELS.COM ===",
+      "id": 50034,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["affcid", "afflid", "mcicid", "irgwc", "irclickid", "mpid", "pos", "locale"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?hotels\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== UDEMY — not in ClearURLs ===",
+      "id": 50035,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "couponCode",
+                "ranMID",
+                "ranEAID",
+                "ranSiteID",
+                "siteID",
+                "LSNSUBSITE",
+                "pi_ad_id",
+                "irgwc",
+                "irclickid",
+                "kw",
+                "src"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?udemy\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== MEDIUM — not in ClearURLs ===",
+      "id": 50036,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "source",
+                "gi",
+                "sk",
+                "collection",
+                "referral"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?medium\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STACKOVERFLOW / STACKEXCHANGE — not in ClearURLs ===",
+      "id": 50037,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["cb", "r", "stw", "source"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?stackoverflow\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== WIKIPEDIA / WIKIMEDIA — not in ClearURLs ===",
+      "id": 50038,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["wprov", "uselang"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?wikipedia\\.org/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== REUTERS — not in ClearURLs ===",
+      "id": 50039,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["taid", "attribution", "customdesig"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?reuters\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== BBC — not in ClearURLs ===",
+      "id": 50040,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["ocid", "ns_mchannel", "ns_campaign", "ns_source", "ns_linkname", "ns_fee"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?bbc\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== THE GUARDIAN — not in ClearURLs ===",
+      "id": 50041,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["CMP", "gusrc", "INTCMP", "src"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?theguardian\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== CNN — not in ClearURLs ===",
+      "id": 50042,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["hpt", "iid", "section"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?cnn\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== WASHINGTON POST — not in ClearURLs ===",
+      "id": 50043,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["itid", "noredirect", "arc404", "src"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?washingtonpost\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== THE VERGE / VOX MEDIA — not in ClearURLs ===",
+      "id": 50044,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["itm_campaign", "itm_medium", "itm_source", "itm_content"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?theverge\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== WIRED — not in ClearURLs ===",
+      "id": 50045,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["mbid", "verso"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?wired\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== GITHUB — supplements ClearURLs github rules ===",
+      "id": 50046,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "email_token",
+                "email_source",
+                "notification_referrer_id",
+                "notifications_query",
+                "unsubscribe_token"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?github\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== TWITCH — supplements ClearURLs twitch rules ===",
+      "id": 50047,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "tt_medium",
+                "tt_content",
+                "desktop-redirect",
+                "lang"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?twitch\\.tv/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STEAM / STEAMPOWERED — supplements ClearURLs ===",
+      "id": 50048,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["snr", "curator_clanid"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?steampowered\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== EPIC GAMES — not in ClearURLs ===",
+      "id": 50049,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "epic_affiliate",
+                "epic_campaign",
+                "epic_gameId",
+                "irgwc",
+                "irclickid",
+                "clickid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?epicgames\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== PAYPAL — not in ClearURLs ===",
+      "id": 50050,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "mfid",
+                "cta",
+                "psig"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?paypal\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== INDEED — supplements ClearURLs indeed rules ===",
+      "id": 50051,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "from",
+                "alid",
+                "al",
+                "attributionid",
+                "rsIdx",
+                "mvj",
+                "jlo",
+                "jsa",
+                "pb"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?indeed\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== LINKEDIN — supplements ClearURLs LinkedIn rules ===",
+      "id": 50052,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "refId",
+                "trk",
+                "trackingId",
+                "lipi",
+                "lic",
+                "licu",
+                "rcm",
+                "src"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?linkedin\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== QUORA — not in ClearURLs ===",
+      "id": 50053,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "__filter__",
+                "__ni__",
+                "share",
+                "srid",
+                "ch"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?quora\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== SOUNDCLOUD — not in ClearURLs ===",
+      "id": 50054,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["ref", "in", "from"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?soundcloud\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== BANDCAMP — not in ClearURLs ===",
+      "id": 50055,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["from", "source", "context"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?bandcamp\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== DROPBOX — not in ClearURLs ===",
+      "id": 50056,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "_subject_uid",
+                "n",
+                "mkt_tok",
+                "oref"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?dropbox\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== NOTION — not in ClearURLs ===",
+      "id": 50057,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "pvs",
+                "p",
+                "source",
+                "utm_source",
+                "utm_medium",
+                "utm_campaign"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?notion\\.so/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== PATREON — not in ClearURLs ===",
+      "id": 50058,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "fan_landing",
+                "u",
+                "source"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?patreon\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== CROWDTANGLE / META CONTENT LIBRARY — not in ClearURLs ===",
+      "id": 50059,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["__cft__", "__tn__", "cft"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?fb\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== LAZADA (SEA ecommerce) — not in ClearURLs ===",
+      "id": 50060,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "clickTrackInfo",
+                "dd_affiliate",
+                "pvid",
+                "search_intent_query",
+                "type",
+                "ranMID",
+                "ranEAID"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?lazada\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== TOKOPEDIA (Indonesia) — not in ClearURLs ===",
+      "id": 50061,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "src",
+                "akamai-rp-champion",
+                "whid",
+                "nrp",
+                "gangsource",
+                "tokonow_ref"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?tokopedia\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== BUKALAPAK (Indonesia) — not in ClearURLs ===",
+      "id": 50062,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["from", "source", "ref", "campaign"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?bukalapak\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== MEESHO (India) — not in ClearURLs ===",
+      "id": 50063,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["sourcePage", "sourceSubPage", "utm_source", "utm_medium", "utm_campaign"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?meesho\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== COUPANG (Korea) — not in ClearURLs ===",
+      "id": 50064,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "searchId",
+                "listIndex",
+                "isAddedCart",
+                "clickEventId",
+                "correlationId",
+                "ranking",
+                "source",
+                "sourceType"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?coupang\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== ZARA / INDITEX — not in ClearURLs ===",
+      "id": 50065,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["origin", "tracking", "source"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?zara\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== ASOS — not in ClearURLs ===",
+      "id": 50066,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "affId",
+                "channelRef",
+                "mk_cid",
+                "mk_eid",
+                "puid",
+                "pubref",
+                "ranMID",
+                "ranEAID",
+                "ranSiteID",
+                "via"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?asos\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== H&M — not in ClearURLs ===",
+      "id": 50067,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["affTrack", "CMP", "source", "tracking"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?hm\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== SEPHORA — not in ClearURLs ===",
+      "id": 50068,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "icid2",
+                "om_mmc",
+                "source",
+                "sourceType",
+                "affiliate",
+                "irgwc",
+                "irclickid",
+                "clickid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?sephora\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== NIKE — not in ClearURLs ===",
+      "id": 50069,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "cp",
+                "cid",
+                "mid",
+                "mlid",
+                "rl",
+                "vst",
+                "eid",
+                "piid",
+                "hhid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?nike\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== ADIDAS — not in ClearURLs ===",
+      "id": 50070,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "cid",
+                "cm_mmc",
+                "source",
+                "irgwc",
+                "irclickid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?adidas\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== IKEA — not in ClearURLs ===",
+      "id": 50071,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "ito",
+                "pmsno",
+                "source",
+                "cid",
+                "tracking"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?ikea\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== WAYFAIR — not in ClearURLs ===",
+      "id": 50072,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "refid",
+                "sem",
+                "irgwc",
+                "irclickid",
+                "clickid",
+                "mid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?wayfair\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== CHEWY — not in ClearURLs ===",
+      "id": 50073,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["source", "irgwc", "irclickid", "clickid"]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?chewy\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== NEWEGG — not in ClearURLs ===",
+      "id": 50074,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "cm_sp",
+                "cm_re",
+                "AID",
+                "PID",
+                "SID",
+                "nm_mc",
+                "icid",
+                "source_type"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?newegg\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== ETSY strict extras ===",
+      "id": 50075,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "logging_key",
+                "pro",
+                "send_client_id"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?etsy\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    }
+
+  ],
+
+  "strict_rules": [
+
+    {
+      "_comment": "=== STRICT GLOBAL SUPPLEMENTS — includes affiliate IDs, click IDs, all referral marketing ===",
+      "id": 61000,
       "priority": 1,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["blt","promo"] }
+            "queryTransform": {
+              "removeParams": [
+                "aff_id",
+                "aff_sub",
+                "aff_sub2",
+                "aff_sub3",
+                "aff_sub4",
+                "aff_sub5",
+                "aff_unique1",
+                "aff_unique2",
+                "affclick",
+                "affcode",
+                "afftrack",
+                "affiliate",
+                "affiliate_id",
+                "affiliateid",
+                "at_campaign",
+                "at_custom1",
+                "at_custom2",
+                "at_custom3",
+                "at_custom4",
+                "at_medium",
+                "at_source",
+                "campaign_id",
+                "campaign_source",
+                "campaign_medium",
+                "campaign_name",
+                "campaign_content",
+                "campaign_term",
+                "click_id",
+                "clickid",
+                "clickref",
+                "cnx_clk",
+                "cnx_medium",
+                "cnx_source",
+                "cwsid",
+                "dd_source",
+                "ef_id",
+                "icid",
+                "irclickid",
+                "irgwc",
+                "j",
+                "jid",
+                "kenshoo_ida",
+                "kwid",
+                "mc_cid",
+                "mc_eid",
+                "mkwid",
+                "muid",
+                "nb_klid",
+                "ns_campaign",
+                "ns_fee",
+                "ns_linkname",
+                "ns_mchannel",
+                "ns_source",
+                "oly_anon_id",
+                "oly_enc_id",
+                "om_campaign",
+                "om_source",
+                "om_medium",
+                "om_content",
+                "om_clid",
+                "omnisendContactID",
+                "orig_msclkid",
+                "partner_id",
+                "pcrid",
+                "piwik_campaign",
+                "piwik_keyword",
+                "piwik_source",
+                "pk_campaign",
+                "pk_cpn",
+                "pk_keyword",
+                "pk_kwd",
+                "pk_medium",
+                "pk_source",
+                "ranEAID",
+                "ranMID",
+                "ranSiteID",
+                "rb_clickid",
+                "rdct",
+                "s_cid",
+                "s_kwcid",
+                "sc_campaign",
+                "sc_channel",
+                "sc_content",
+                "sc_medium",
+                "sc_outcome",
+                "sc_term",
+                "siteID",
+                "soc_src",
+                "soc_trk",
+                "spref",
+                "sub_id",
+                "subid",
+                "trk_contact",
+                "trk_module",
+                "trk_msg",
+                "trk_sid",
+                "ttclid",
+                "vero_conv",
+                "vero_id",
+                "wbraid",
+                "wickedid",
+                "xtor",
+                "xtmc",
+                "yclid",
+                "zanpid",
+                "zm_medium",
+                "zm_source"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STRICT AMAZON — includes tag (affiliate) ===",
+      "id": 60003,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "pf_rd_c",
+                "pf_rd_i",
+                "pf_rd_m",
+                "pf_rd_p",
+                "pf_rd_r",
+                "pf_rd_s",
+                "pf_rd_t",
+                "psc",
+                "smid",
+                "sr",
+                "ascsubtag",
+                "tag"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?amazon\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STRICT ALIBABA ===",
+      "id": 60001,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "ali_trackid",
+                "spm",
+                "spm_a",
+                "spm_b",
+                "spm_c",
+                "spm_d",
+                "spm_id",
+                "tracelog",
+                "tpp_fcategory",
+                "tpp_rcategory",
+                "initiative_id"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?alibaba\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STRICT ALIEXPRESS — includes aff_* affiliate params ===",
+      "id": 60002,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "aff_fcid",
+                "aff_fsk",
+                "aff_platform",
+                "aff_trace_key",
+                "aff_request_id",
+                "spm",
+                "spm_a",
+                "spm_b",
+                "spm_c",
+                "spm_d",
+                "spm_id",
+                "initiative_id",
+                "pdp_npi",
+                "pdp_ext_f",
+                "spreadType",
+                "srcSns",
+                "sourceType",
+                "bizType"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?aliexpress\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STRICT BOL.COM ===",
+      "id": 60005,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": ["blt", "promo", "source"]
+            }
           }
         }
       },
@@ -397,17 +2308,30 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== STRICT EBAY — includes campid, customid, mkrid, mkcid ===",
       "id": 60006,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
               "removeParams": [
-                "_trkparms","campid","crlp","customid","epid","keyword",
-                "mkcid","mkevt","mkgroupid","mkrid","mksegid","sid","siteid"
+                "_trkparms",
+                "campid",
+                "crlp",
+                "customid",
+                "epid",
+                "keyword",
+                "mkcid",
+                "mkevt",
+                "mkgroupid",
+                "mkrid",
+                "mksegid",
+                "sid",
+                "siteid"
               ]
             }
           }
@@ -418,15 +2342,27 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== STRICT ETSY — includes click_key, click_sum (affiliate params) ===",
       "id": 60007,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
-              "removeParams": ["click_key","click_sum","ref"]
+              "removeParams": [
+                "ref",
+                "frs",
+                "source",
+                "organic_search_click",
+                "click_key",
+                "click_sum",
+                "logging_key",
+                "pro",
+                "send_client_id"
+              ]
             }
           }
         }
@@ -436,15 +2372,27 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== STRICT FLIPKART — includes affid ===",
       "id": 60008,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
-              "removeParams": ["affid","fm","lid","marketplace","otracker","ppn","ppt","q","qH","srno","ssid"]
+              "removeParams": [
+                "affid",
+                "fm",
+                "lid",
+                "marketplace",
+                "otracker",
+                "ppn",
+                "ppt",
+                "srno",
+                "ssid"
+              ]
             }
           }
         }
@@ -454,14 +2402,18 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== STRICT JD.COM ===",
       "id": 60009,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["pvid"] }
+            "queryTransform": {
+              "removeParams": ["pvid", "cu_param", "lbs", "enc", "unionId"]
+            }
           }
         }
       },
@@ -470,15 +2422,25 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== STRICT MERCADOLIBRE ===",
       "id": 60010,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
-              "removeParams": ["matt_campaign","matt_source","matt_tool","matt_word"]
+              "removeParams": [
+                "matt_campaign",
+                "matt_source",
+                "matt_tool",
+                "matt_word",
+                "matt_custom_a",
+                "matt_custom_b",
+                "deal_print_id"
+              ]
             }
           }
         }
@@ -488,14 +2450,18 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== STRICT NOON ===",
       "id": 60011,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["k","o"] }
+            "queryTransform": {
+              "removeParams": ["k", "o", "source_type", "t_source", "ref"]
+            }
           }
         }
       },
@@ -504,14 +2470,35 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== STRICT SHOPEE ===",
       "id": 60012,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["smtt","sp_atk","xptdk"] }
+            "queryTransform": {
+              "removeParams": [
+                "smtt",
+                "sp_atk",
+                "xptdk",
+                "af_siteid",
+                "af_click_lookback",
+                "af_viewthrough_lookback",
+                "af_reengagement_window",
+                "pid",
+                "c",
+                "is_retargeting",
+                "af_dp",
+                "af_web_dp",
+                "shopid",
+                "af_sub1",
+                "af_sub2",
+                "af_sub3"
+              ]
+            }
           }
         }
       },
@@ -520,15 +2507,32 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== STRICT TAOBAO ===",
       "id": 60013,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
-              "removeParams": ["ali_trackid","spm","spm_a","spm_b","spm_c","spm_d","spm_id"]
+              "removeParams": [
+                "ali_trackid",
+                "spm",
+                "spm_a",
+                "spm_b",
+                "spm_c",
+                "spm_d",
+                "spm_id",
+                "scm",
+                "pvid",
+                "abbucket",
+                "search_type",
+                "sourceId",
+                "initiative_id",
+                "tracelog"
+              ]
             }
           }
         }
@@ -538,31 +2542,55 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== STRICT TARGET — includes irgwc ===",
       "id": 60014,
-      "priority": 1,
-      "action": {
-        "type": "redirect",
-        "redirect": {
-          "transform": {
-            "queryTransform": { "removeParams": ["irgwc"] }
-          }
-        }
-      },
-      "condition": {
-        "regexFilter": "^https?://([^/]*\\.)?target\\.[^/]+/",
-        "resourceTypes": ["main_frame", "sub_frame"]
-      }
-    },
-    {
-      "id": 60015,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
             "queryTransform": {
-              "removeParams": ["affilsrc","affp1","cmpid","irgwc","u1"]
+              "removeParams": [
+                "irgwc",
+                "afid",
+                "clkid",
+                "lnm",
+                "ref",
+                "partnerId",
+                "irclickid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?target\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STRICT WALMART — includes affilsrc, affp1, irgwc, u1 ===",
+      "id": 60015,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "affilsrc",
+                "affp1",
+                "cmpid",
+                "irgwc",
+                "irclickid",
+                "u1",
+                "sourceid",
+                "veh",
+                "wmlspartner"
+              ]
             }
           }
         }
@@ -572,14 +2600,18 @@
         "resourceTypes": ["main_frame", "sub_frame"]
       }
     },
+
     {
+      "_comment": "=== STRICT ZALANDO ===",
       "id": 60016,
-      "priority": 1,
+      "priority": 2,
       "action": {
         "type": "redirect",
         "redirect": {
           "transform": {
-            "queryTransform": { "removeParams": ["wm_mc"] }
+            "queryTransform": {
+              "removeParams": ["wm_mc", "cross_sell", "tracking"]
+            }
           }
         }
       },
@@ -587,10 +2619,215 @@
         "regexFilter": "^https?://([^/]*\\.)?zalando\\.[^/]+/",
         "resourceTypes": ["main_frame", "sub_frame"]
       }
+    },
+
+    {
+      "_comment": "=== STRICT BESTBUY — includes irclickid ===",
+      "id": 60004,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "irclickid",
+                "irgwc",
+                "loc",
+                "acampID",
+                "mpid",
+                "intl",
+                "ref"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?bestbuy\\.[^/]+/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STRICT SPOTIFY — includes referralCode ===",
+      "id": 60020,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "si",
+                "nd",
+                "context",
+                "go",
+                "sp_cid",
+                "referral",
+                "referralCode",
+                "utm_source",
+                "utm_medium",
+                "utm_campaign"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?spotify\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STRICT SUBSTACK — includes r (referral code) ===",
+      "id": 60021,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "r",
+                "trk",
+                "utm_source",
+                "utm_medium",
+                "utm_campaign",
+                "utm_content"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?substack\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STRICT APPLE — includes pt (affiliate partner token) ===",
+      "id": 60022,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "at",
+                "ct",
+                "ls",
+                "mt",
+                "uo",
+                "app",
+                "itsct",
+                "itscg",
+                "pt",
+                "app_id",
+                "aosid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?apple\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STRICT BOOKING.COM — includes aid and label (affiliate identifiers) ===",
+      "id": 60023,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "aid",
+                "label",
+                "sid",
+                "src",
+                "sig",
+                "click_id",
+                "irgwc",
+                "irclickid",
+                "affiliate_id",
+                "adplat",
+                "adpos"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?booking\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STRICT PATREON — includes u (affiliate/referral) ===",
+      "id": 60024,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "fan_landing",
+                "u",
+                "source",
+                "irgwc",
+                "irclickid"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?patreon\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
+    },
+
+    {
+      "_comment": "=== STRICT UDEMY — includes couponCode (affiliate coupon) ===",
+      "id": 60025,
+      "priority": 2,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "couponCode",
+                "ranMID",
+                "ranEAID",
+                "ranSiteID",
+                "siteID",
+                "LSNSUBSITE",
+                "pi_ad_id",
+                "irgwc",
+                "irclickid",
+                "kw",
+                "src"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://([^/]*\\.)?udemy\\.com/",
+        "resourceTypes": ["main_frame", "sub_frame"]
+      }
     }
-  ],
-  "notes": {
-    "skipped_count": 1,
-    "skipped_reason": "Path transforms not supported by Declarative Net Request; handle via optional webRequest fallback if needed."
-  }
+
+  ]
 }
