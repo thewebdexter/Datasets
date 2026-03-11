@@ -33,4 +33,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update daily HSTS bloom filter"
-          file_pattern: 'hsts-bloom-filter.json'
+          file_pattern: 'data/hsts-bloom-filter.json'
