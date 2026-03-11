@@ -1,0 +1,36 @@
+name: Update HSTS Bloom Filter
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every day
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows you to run this manually from the Actions tab
+
+jobs:
+  update-filter:
+    runs-on: ubuntu-latest
+    
+    # Crucial: Give the action permission to push commits back to the repo
+    permissions:
+      contents: write 
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install bloomfilter
+
+      - name: Generate New Bloom Filter
+        run: node scripts/build-hsts-filter.js
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update daily HSTS bloom filter"
+          file_pattern: 'hsts-bloom-filter.json'
