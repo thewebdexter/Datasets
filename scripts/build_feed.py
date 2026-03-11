@@ -1,14 +1,7 @@
 #!/usr/bin/env python3
 """
 build_feed.py — Downloads all threat-intel feeds, deduplicates entries,
-and writes three output files:
-
-  data/phishing_urls.json  — full URLs from PhishTank + OpenPhish (URL-level match)
-  data/malware_urls.json   — full URLs from URLhaus (URL-level match)
-  data/domain_map.json     — domains from all other feeds (domain-level match)
-  data/feed_meta.json      — stats / health check
-
-Place this file at: scripts/build_feed.py
+and writes JSON outputs as well as optimized Bloom filters for the extension.
 """
 
 import csv
@@ -26,6 +19,7 @@ from urllib.parse import urlparse
 
 import requests
 import tldextract
+from pybloom_live import ScalableBloomFilter
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
@@ -131,27 +125,19 @@ def feed_urlhaus() -> list[dict]:
     """
     URLhaus (abuse.ch) – malware distribution URLs (plain CSV).
     Tagged as 'malware_url' so the pipeline writes them to malware_urls.json
-    at full URL granularity — URLhaus regularly lists compromised legitimate
-    sites where only a specific path is malicious, not the whole domain.
-
-    NOTE: URLhaus's header row starts with '# ' so we strip that prefix
-    before passing it to DictReader, otherwise the column names won't match.
+    at full URL granularity.
     """
     log.info("URLhaus …")
     try:
         r = fetch("https://urlhaus.abuse.ch/downloads/csv_recent/")
         lines = r.text.splitlines()
 
-        # Find and clean the header line (looks like: '# id,dateadded,url,...')
-        # then keep all non-comment data lines after it.
         header = None
         data_lines = []
         for line in lines:
             if header is None:
                 if line.startswith("#") and "," in line:
-                    # Strip the leading '# ' to get a proper CSV header
                     header = line.lstrip("# ").strip()
-                # Skip pure comment / blank lines before header
                 continue
             if not line.startswith("#") and line.strip():
                 data_lines.append(line)
@@ -173,10 +159,7 @@ def feed_urlhaus() -> list[dict]:
 
 
 def feed_malware_domain_list() -> list[dict]:
-    """
-    Steven Black's unified hosts file – malware + adware domains.
-    Replaces malwaredomainlist.com which is no longer maintained.
-    """
+    """Steven Black's unified hosts file – malware + adware domains."""
     log.info("Steven Black hosts (malware + adware) …")
     try:
         r = fetch(
@@ -188,7 +171,6 @@ def feed_malware_domain_list() -> list[dict]:
             line = line.strip()
             if not line or line.startswith("#"):
                 continue
-            # Format: "0.0.0.0  evil.com"
             parts = line.split()
             if len(parts) >= 2 and parts[0] in ("0.0.0.0", "127.0.0.1"):
                 domain = parts[1].lower()
@@ -239,7 +221,6 @@ def feed_easylist_privacy() -> list[dict]:
     try:
         r = fetch("https://easylist.to/easylist/easyprivacy.txt")
         domains = []
-        # Extract ||domain^ style rules (host-level blocks)
         pattern = re.compile(r"^\|\|([a-z0-9.\-]+)\^", re.I)
         for line in r.text.splitlines():
             m = pattern.match(line.strip())
@@ -298,10 +279,7 @@ def feed_hagezi_pro() -> list[dict]:
 
 
 def feed_cisco_umbrella_top1m() -> list[dict]:
-    """
-    Cisco Umbrella Top 1M – KNOWN-GOOD domains (allowlist / inverse use).
-    Returns entries with category 'known_good' so the extension can whitelist them.
-    """
+    """Cisco Umbrella Top 1M – KNOWN-GOOD domains (allowlist / inverse use)."""
     log.info("Cisco Umbrella Top 1M …")
     try:
         r = fetch(
@@ -359,14 +337,10 @@ def build():
 
     log.info("Total raw entries: %d — deduplicating …", len(all_entries))
 
-    # Three buckets:
-    #   phishing_urls  — full URLs (PhishTank, OpenPhish) — category "phishing"
-    #   malware_urls   — full URLs (URLhaus)              — category "malware_url"
-    #   domain_map     — domain-level (everything else)
     seen_phishing_urls: set[str] = set()
     seen_malware_urls:  set[str] = set()
-    seen_urls:          set[str] = set()       # global dedup across all entries
-    seen_domains:       dict[str, str] = {}    # domain → category
+    seen_urls:          set[str] = set()
+    seen_domains:       dict[str, str] = {}
     clean: list[dict] = []
 
     for entry in all_entries:
@@ -385,16 +359,10 @@ def build():
         cat = entry["category"]
 
         if cat == "phishing":
-            # Full URL — phishing lives on legitimate hosts (Google Docs, OneDrive…)
             seen_phishing_urls.add(norm)
-
         elif cat == "malware_url":
-            # Full URL — URLhaus lists compromised sites where only a path is hostile
             seen_malware_urls.add(norm)
-
         else:
-            # Domain-level — dedicated malicious infrastructure, trackers, spam
-            # known_good only wins if no threat category has claimed this domain yet
             if domain and (domain not in seen_domains or cat != "known_good"):
                 seen_domains[domain] = cat
 
@@ -405,27 +373,47 @@ def build():
 
     now = datetime.now(timezone.utc).isoformat()
 
-    # ── phishing_urls.json ─────────────────────────────────────────────────
+    # 1. Initialize Bloom Filters
+    # We use initial_capacity with a minimum of 10,000 to prevent errors on empty feeds
+    phishing_filter = ScalableBloomFilter(initial_capacity=max(len(seen_phishing_urls), 10000), error_rate=0.001)
+    malware_filter = ScalableBloomFilter(initial_capacity=max(len(seen_malware_urls), 10000), error_rate=0.001)
+
+    # ── phishing_urls.json + Bloom ──────────────────────────────────────────
     PHISHING_URLS_FILE.write_text(
         json.dumps({
             "generated_at": now,
             "total": len(seen_phishing_urls),
-            "urls": sorted(seen_phishing_urls),   # sorted → O(log n) binary search
+            "urls": sorted(seen_phishing_urls),
         }, separators=(",", ":")),
         encoding="utf-8",
     )
     log.info("Wrote %s (%.1f MB)", PHISHING_URLS_FILE, PHISHING_URLS_FILE.stat().st_size / 1e6)
 
-    # ── malware_urls.json ──────────────────────────────────────────────────
+    for url in seen_phishing_urls:
+        phishing_filter.add(url)
+    
+    with open(OUTPUT_DIR / "phishing_bloom.bin", "wb") as f:
+        phishing_filter.tofile(f)
+    log.info("Wrote phishing_bloom.bin (%.1f MB)", (OUTPUT_DIR / "phishing_bloom.bin").stat().st_size / 1e6)
+
+    # ── malware_urls.json + Bloom ───────────────────────────────────────────
     MALWARE_URLS_FILE.write_text(
         json.dumps({
             "generated_at": now,
             "total": len(seen_malware_urls),
-            "urls": sorted(seen_malware_urls),    # sorted → O(log n) binary search
+            "urls": sorted(seen_malware_urls),
         }, separators=(",", ":")),
         encoding="utf-8",
     )
     log.info("Wrote %s (%.1f MB)", MALWARE_URLS_FILE, MALWARE_URLS_FILE.stat().st_size / 1e6)
+
+    for url in seen_malware_urls:
+        malware_filter.add(url)
+        
+    with open(OUTPUT_DIR / "malware_bloom.bin", "wb") as f:
+        malware_filter.tofile(f)
+    log.info("Wrote malware_bloom.bin (%.1f MB)", (OUTPUT_DIR / "malware_bloom.bin").stat().st_size / 1e6)
+
 
     # ── domain_map.json ────────────────────────────────────────────────────
     DOMAIN_MAP_FILE.write_text(
@@ -433,6 +421,7 @@ def build():
         encoding="utf-8",
     )
     log.info("Wrote %s (%.1f MB)", DOMAIN_MAP_FILE, DOMAIN_MAP_FILE.stat().st_size / 1e6)
+
 
     # ── feed_meta.json ─────────────────────────────────────────────────────
     meta = {
