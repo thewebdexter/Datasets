@@ -1,7 +1,9 @@
 {
-  "generated_at": "2026-03-11T00:50:35.860745+00:00",
+  "generated_at": "2026-03-11T01:12:19.192929+00:00",
   "total_entries": 2133758,
-  "unique_domains": 988307,
+  "phishing_urls": 56107,
+  "malware_urls": 0,
+  "unique_domains": 986459,
   "feed_stats": {
     "feed_phishtank": 56258,
     "feed_openphish": 300,
