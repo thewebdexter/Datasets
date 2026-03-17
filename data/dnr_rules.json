@@ -1,7 +1,7 @@
 {
   "name": "SentraLink DNR Rules",
   "version": "1.1.0",
-  "generated_at": "2026-03-17T13:19:33.363473Z",
+  "generated_at": "2026-03-17T19:07:05.006139Z",
   "sources": {
     "manual": "data/dnr_rules_manual.json",
     "clearurls": "https://rules1.clearurls.xyz/data.minify.json"
