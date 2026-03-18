@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-03-18T13:21:47.324989+00:00",
-  "total_entries": 2258760,
-  "phishing_urls": 56062,
-  "malware_urls": 20184,
+  "generated_at": "2026-03-18T19:06:13.225806+00:00",
+  "total_entries": 2258929,
+  "phishing_urls": 56029,
+  "malware_urls": 20386,
   "unique_domains": 1018540,
   "feed_stats": {
-    "feed_phishtank": 56167,
+    "feed_phishtank": 56137,
     "feed_openphish": 300,
-    "feed_urlhaus": 20204,
+    "feed_urlhaus": 20410,
     "feed_malware_domain_list": 170087,
     "feed_disconnect_me": 4730,
     "feed_easylist_privacy": 46772,
@@ -19,8 +19,8 @@
     "known_good": 926744,
     "malware": 906107,
     "tracker": 346355,
-    "phishing": 56062,
-    "malware_url": 20184,
+    "phishing": 56029,
+    "malware_url": 20386,
     "advertising": 1792,
     "analytics": 382,
     "content": 355,
@@ -38,10 +38,10 @@
     "hagezi_tif": 736023,
     "hagezi_pro": 302786,
     "steven_black_hosts": 170084,
-    "phishtank": 55772,
+    "phishtank": 55741,
     "easyprivacy": 43569,
-    "urlhaus": 20184,
+    "urlhaus": 20386,
     "disconnect_me": 3308,
-    "openphish": 290
+    "openphish": 288
   }
 }
