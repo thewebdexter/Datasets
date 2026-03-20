@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-03-19T19:04:14.471539+00:00",
-  "total_entries": 2283857,
-  "phishing_urls": 56294,
-  "malware_urls": 20634,
-  "unique_domains": 1040268,
+  "generated_at": "2026-03-20T02:27:00.170546+00:00",
+  "total_entries": 2279572,
+  "phishing_urls": 56248,
+  "malware_urls": 20107,
+  "unique_domains": 1040123,
   "feed_stats": {
-    "feed_phishtank": 56411,
+    "feed_phishtank": 56342,
     "feed_openphish": 300,
-    "feed_urlhaus": 20658,
+    "feed_urlhaus": 20131,
     "feed_malware_domain_list": 170087,
     "feed_disconnect_me": 4730,
-    "feed_easylist_privacy": 46774,
-    "feed_hagezi_tif": 786946,
-    "feed_hagezi_pro": 396633,
+    "feed_easylist_privacy": 46775,
+    "feed_hagezi_tif": 788119,
+    "feed_hagezi_pro": 385525,
     "feed_cisco_umbrella_top1m": 1000000
   },
   "categories": {
-    "malware": 929774,
-    "known_good": 926855,
-    "tracker": 346992,
-    "phishing": 56294,
-    "malware_url": 20634,
+    "malware": 930989,
+    "known_good": 927177,
+    "tracker": 341743,
+    "phishing": 56248,
+    "malware_url": 20107,
     "advertising": 1791,
     "analytics": 381,
     "content": 357,
@@ -34,14 +34,14 @@
     "consentmanagers": 13
   },
   "sources": {
-    "cisco_umbrella": 926855,
-    "hagezi_tif": 759690,
-    "hagezi_pro": 303421,
+    "cisco_umbrella": 927177,
+    "hagezi_tif": 760905,
+    "hagezi_pro": 298171,
     "steven_black_hosts": 170084,
-    "phishtank": 56017,
-    "easyprivacy": 43571,
-    "urlhaus": 20634,
+    "phishtank": 55952,
+    "easyprivacy": 43572,
+    "urlhaus": 20107,
     "disconnect_me": 3308,
-    "openphish": 277
+    "openphish": 296
   }
 }
