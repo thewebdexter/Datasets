@@ -1,7 +1,7 @@
 {
   "name": "SentraLink DNR Rules",
-  "version": "1.1.0",
-  "generated_at": "2026-03-25T13:18:30.337947Z",
+  "version": "1.1.1",
+  "generated_at": "2026-03-25T19:00:15.410225Z",
   "sources": {
     "manual": "data/dnr_rules_manual.json",
     "clearurls": "https://rules1.clearurls.xyz/data.minify.json"
@@ -9,10 +9,10 @@
   "stats": {
     "manual_normal": 76,
     "manual_strict": 23,
-    "auto_normal": 138,
-    "auto_strict": 139,
-    "total_normal": 214,
-    "total_strict": 162
+    "auto_normal": 139,
+    "auto_strict": 140,
+    "total_normal": 215,
+    "total_strict": 163
   },
   "normal_rules": [
     {
@@ -5981,6 +5981,31 @@
           "sub_frame"
         ]
       }
+    },
+    {
+      "id": 70277,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "_sc",
+                "_sid",
+                "_ss"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://(?:[a-z0-9-]+\\.)*?nordwolle\\.com",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
     }
   ],
   "strict_rules": [
@@ -10496,6 +10521,31 @@
       },
       "condition": {
         "regexFilter": "^https?://(?:[a-z0-9-]+\\.)*?forbes\\.com",
+        "resourceTypes": [
+          "main_frame",
+          "sub_frame"
+        ]
+      }
+    },
+    {
+      "id": 70278,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "transform": {
+            "queryTransform": {
+              "removeParams": [
+                "_sc",
+                "_sid",
+                "_ss"
+              ]
+            }
+          }
+        }
+      },
+      "condition": {
+        "regexFilter": "^https?://(?:[a-z0-9-]+\\.)*?nordwolle\\.com",
         "resourceTypes": [
           "main_frame",
           "sub_frame"
